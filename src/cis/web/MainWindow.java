@@ -59,7 +59,7 @@ public class MainWindow extends Window {
 		mainLayout.addComponent(component);
 		mainLayout.setExpandRatio(component, 1);
 		
-		Label footerLabel = new Label("&nbsp;&nbsp;Desarrollado por <b>Alejandro Duarte (alejandro.d.a@gmail.com)</b>. Todos los derechos reservados.", Label.CONTENT_XHTML);
+		Label footerLabel = new Label("&nbsp;&nbsp;<b>Alejandro Duarte (alejandro.d.a@gmail.com)</b>. All rights reserved.", Label.CONTENT_XHTML);
 		footerLabel.setStyleName(Runo.LABEL_SMALL);
 		
 		HorizontalLayout footerLayout = new HorizontalLayout();
