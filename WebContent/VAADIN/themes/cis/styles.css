@@ -1,5 +1,5 @@
-.v-theme-version:after {content:"6_7_0";}
-.v-theme-version-6_7_0 {display: none;}
+.v-theme-version:after {content:"6_8_4";}
+.v-theme-version-6_8_4 {display: none;}
 /* Automatically compiled css file from subdirectories. */
 
 .v-absolutelayout-wrapper {
@@ -31,7 +31,6 @@
 }
 .v-accordion-item-content {
 	position: absolute;
-	overflow: auto;
 	width: 100%;
 }
 
@@ -289,7 +288,6 @@ div.v-app-loading {
 .v-view {
 	height: 100%;
 	width: 100%;
-	overflow: auto;
 	/* avoid scrollbars with margins in root layout */
 	outline: none;
 	margin-top: -1px;
@@ -485,11 +483,20 @@ div.v-app-loading {
 
 .v-drag-element {
 	z-index: 60000;
-	position: absolute;
-    opacity: 0.5;
-    filter: alpha(opacity=50);
-    cursor: default;
+	/* override any other position: properties */
+	position: absolute !important;
+	opacity: 0.5;
+	filter: alpha(opacity=50);
+	cursor: default;
 }
+
+.v-scrollable {
+	overflow: auto;
+}
+/* Enable kinetic scrolling on Mobile Safari 6 */ 
+.v-ios.v-sa6 .v-scrollable { 
+        -webkit-overflow-scrolling: touch; 
+} 
 
 .v-csslayout {
 	overflow: hidden;
@@ -577,6 +584,9 @@ div.v-app-loading {
 .v-datefield-calendarpanel-day-focused {
 	outline: 1px dotted black;
 }
+.v-datefield-calendarpanel-day-offmonth {
+    color: #666;
+}
 
 .v-ie6 .v-datefield-calendarpanel-day,
 .v-ie7 .v-datefield-calendarpanel-day {
@@ -624,6 +634,27 @@ div.v-app-loading {
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
 	border-radius: 4px;
+	position: relative;
+}
+[draggable=true] {
+	-khtml-user-drag: element;
+	-webkit-user-drag: element;
+	-khtml-user-select: none;
+	-webkit-user-select: none;
+}
+.v-ie .v-ddwrapper a.drag-start {
+	display: block;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+    left: 0;
+	right: 0;
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+	/* Some color needed to make it draggable */
+	background-color:cyan;
+	filter: alpha(opacity=0);
 }
 .v-ddwrapper-over {
 	border: 2px solid #1d9dff;
@@ -777,31 +808,52 @@ div.v-app-loading {
 .v-formlayout-captioncell .v-caption {
 	overflow: visible;
 }
-.v-formlayout-spacing .v-formlayout-row .v-formlayout-captioncell, 
-.v-formlayout-spacing .v-formlayout-row .v-formlayout-contentcell,
-.v-formlayout-spacing .v-formlayout-row .v-formlayout-errorcell {
+.v-formlayout-spacing > tbody > .v-formlayout-row > .v-formlayout-captioncell, 
+.v-formlayout-spacing > tbody > .v-formlayout-row > .v-formlayout-contentcell,
+.v-formlayout-spacing > tbody > .v-formlayout-row > .v-formlayout-errorcell {
 	padding-top: 6px;
 }
-.v-formlayout-spacing .v-formlayout-firstrow .v-formlayout-captioncell, 
-.v-formlayout-spacing .v-formlayout-firstrow .v-formlayout-contentcell,
-.v-formlayout-spacing .v-formlayout-firstrow .v-formlayout-errorcell {
+.v-formlayout-spacing > tbody > .v-formlayout-firstrow > .v-formlayout-captioncell, 
+.v-formlayout-spacing > tbody > .v-formlayout-firstrow > .v-formlayout-contentcell,
+.v-formlayout-spacing > tbody > .v-formlayout-firstrow > .v-formlayout-errorcell {
 	padding-top: 0;
 }
-.v-formlayout-margin-top .v-formlayout-firstrow .v-formlayout-captioncell, 
-.v-formlayout-margin-top .v-formlayout-firstrow .v-formlayout-contentcell,
-.v-formlayout-margin-top .v-formlayout-firstrow .v-formlayout-errorcell {
+.v-formlayout-margin-top > tbody > .v-formlayout-firstrow > .v-formlayout-captioncell, 
+.v-formlayout-margin-top > tbody > .v-formlayout-firstrow > .v-formlayout-contentcell,
+.v-formlayout-margin-top > tbody > .v-formlayout-firstrow > .v-formlayout-errorcell {
 	padding-top: 12px;
 }
-.v-formlayout-margin-bottom .v-formlayout-lastrow .v-formlayout-captioncell,
-.v-formlayout-margin-bottom .v-formlayout-lastrow .v-formlayout-contentcell,
-.v-formlayout-margin-bottom .v-formlayout-lastrow .v-formlayout-errorcell {
+.v-formlayout-margin-bottom > tbody > .v-formlayout-lastrow > .v-formlayout-captioncell,
+.v-formlayout-margin-bottom > tbody > .v-formlayout-lastrow > .v-formlayout-contentcell,
+.v-formlayout-margin-bottom > tbody > .v-formlayout-lastrow > .v-formlayout-errorcell {
 	padding-bottom: 12px;
 }
-.v-formlayout-margin-left .v-formlayout-captioncell {
+.v-ie6 .v-formlayout-spacing .v-formlayout-row .v-formlayout-captioncell, 
+.v-ie6 .v-formlayout-spacing .v-formlayout-row .v-formlayout-contentcell,
+.v-ie6 .v-formlayout-spacing .v-formlayout-row .v-formlayout-errorcell {
+	padding-top: expression(/v-formlayout-spacing/.test(this.parentNode.parentNode.parentNode.className) ? "6px" : "0px");
+}
+.v-ie6 .v-formlayout-margin-top .v-formlayout-row .v-formlayout-captioncell, 
+.v-ie6 .v-formlayout-margin-top .v-formlayout-row .v-formlayout-contentcell,
+.v-ie6 .v-formlayout-margin-top .v-formlayout-row .v-formlayout-errorcell {
+	padding-top: expression((/v-formlayout-firstrow/.test(this.parentNode.className) && /v-formlayout-margin-top/.test(this.parentNode.parentNode.parentNode.className)) ? "12px" : (/v-formlayout-spacing/.test(this.parentNode.parentNode.parentNode.className) ? "6px" : "0px"));
+}
+.v-ie6 .v-formlayout-margin-bottom .v-formlayout-row .v-formlayout-captioncell,
+.v-ie6 .v-formlayout-margin-bottom .v-formlayout-row .v-formlayout-contentcell,
+.v-ie6 .v-formlayout-margin-bottom .v-formlayout-row .v-formlayout-errorcell {
+	padding-bottom: expression((/v-formlayout-lastrow/.test(this.parentNode.className) && /v-formlayout-margin-bottom/.test(this.parentNode.parentNode.parentNode.className)) ? "12px" : "0px");
+}
+.v-formlayout-margin-left > tbody > .v-formlayout-row > .v-formlayout-captioncell {
 	padding-left: 12px;
 } 
-.v-formlayout-margin-right .v-formlayout-contentcell {
+.v-formlayout-margin-right > tbody > .v-formlayout-row > .v-formlayout-contentcell {
 	padding-right: 12px;
+}
+.v-ie6 .v-formlayout-margin-left .v-formlayout-row .v-formlayout-captioncell {
+	padding-left: expression(/v-formlayout-margin-left/.test(this.parentNode.parentNode.parentNode.className) ? "12px" : "0px");
+}
+.v-ie6 .v-formlayout-margin-right .v-formlayout-row .v-formlayout-contentcell {
+	padding-right: expression(/v-formlayout-margin-right/.test(this.parentNode.parentNode.parentNode.className) ? "12px" : "0px");
 }
 .v-formlayout-captioncell .v-caption .v-required-field-indicator {
 	float: none;
@@ -1075,7 +1127,6 @@ div.v-app-loading {
 	overflow: hidden;
 }
 .v-panel-content {
-	overflow: auto;
 }
 .v-panel-deco {
 }
@@ -1555,6 +1606,12 @@ div.v-progressindicator-indeterminate-disabled {
 	cursor: pointer;
 }
 
+.v-table.v-disabled .v-table-header-cell,
+.v-table.v-disabled .v-table-header-cell-asc,
+.v-table.v-disabled .v-table-header-cell-desc {
+	cursor: default;
+}
+
 .v-table-footer-wrap {
 	overflow: hidden;
 	border: 1px solid #aaa;
@@ -1590,6 +1647,9 @@ div.v-progressindicator-indeterminate-disabled {
 	cursor: col-resize;	
 	width: 1px;
 	overflow: hidden;
+}
+.v-table.v-disabled .v-table-resizer {
+	cursor: default;	
 }
 .v-table-caption-container {
 	overflow: hidden;
@@ -1684,6 +1744,9 @@ div.v-progressindicator-indeterminate-disabled {
 	position: relative; /* hide this from IE, it works without it */
 	cursor: pointer;
 }
+.v-table.v-disabled .v-table-column-selector {
+	cursor: default;
+}
 .v-ie6 .v-table-column-selector,
 .v-ie7 .v-table-column-selector {
 	position: static;
@@ -1743,6 +1806,11 @@ div.v-progressindicator-indeterminate-disabled {
 .v-off {
 	color: #ddd;
 }
+
+.v-table .v-checkbox {
+	display: inline-block;
+}
+
 /*************************************
  * Drag'n'drop styles
  *************************************/
@@ -1794,6 +1862,9 @@ div.v-progressindicator-indeterminate-disabled {
 	border: 0;
 	width: 100%;
 	overflow:hidden;
+}
+.v-tabsheet-tabitemcell:focus {
+	outline: none;
 }
 .v-tabsheet-tabitemcell,
 .v-tabsheet-spacertd {
@@ -1877,7 +1948,11 @@ div.v-progressindicator-indeterminate-disabled {
 	padding: 0.2em 0.5em;
 }
 .v-tabsheet-tabitem .v-caption {
-	cursor: pointer;
+	cursor: inherit;
+}
+.v-tabsheet.v-disabled .v-tabsheet-tabitem,
+.v-tabsheet-tabitemcell-disabled .v-tabsheet-tabitem {
+	cursor: default;
 }
 .v-tabsheet-tabitem-selected {
 	cursor: default;
@@ -1914,6 +1989,7 @@ div.v-progressindicator-indeterminate-disabled {
 	text-align: left /* Force default alignment */
 }
 .v-textarea {
+	resize: none;
 }
 .v-textfield-focus,
 .v-textarea-focus {
@@ -1965,7 +2041,9 @@ textarea.v-textarea-readonly:focus {
 	background: #fff;
 	border: none;
 }
-
+.v-richtextarea .gwt-HTML {
+	height: 100%;
+}
 .v-richtextarea .gwt-RichTextToolbar {
 	white-space: nowrap;
 	background: #959595 url(../base/textfield/img/richtext-toolbar-bg.png) repeat-x 0 -42px;
@@ -2191,13 +2269,13 @@ div.v-tree-node-leaf {
     height: 10px;
     /* defines the amount of indent per level */
     width: 18px;
-}
-.v-ie7 .v-treetable-treespacer{
-	height: 100%; /* #7388 */
+    position: absolute;
+    left: 0;
+    top: 5px;
 }
 
 .v-treetable-node-closed {
-    background: url(../base/treetable/img/arrow-right.png) right center no-repeat;
+    background: url(../base/treetable/img/arrow-right.png) right top no-repeat;
 }
 
 .v-ie6 .v-treetable-node-closed {
@@ -2205,7 +2283,7 @@ div.v-tree-node-leaf {
 } 
 
 .v-treetable-node-open {
-    background: url(../base/treetable/img/arrow-down.png) right center no-repeat;
+    background: url(../base/treetable/img/arrow-down.png) right top no-repeat;
 }
 
 .v-ie6 .v-treetable-node-open {
@@ -2221,6 +2299,10 @@ div.v-tree-node-leaf {
 .v-treetable .v-table-row-odd .v-table-cell-content {
     position: relative;
     z-index: 10;
+}
+
+.v-treetable .v-table-cell-wrapper {
+	position: relative;
 }
 
 .v-treetable .v-table-body .v-table-table .v-table-row-animating {
@@ -2300,10 +2382,15 @@ div table.v-treetable-animation-clone tr.v-table-row-odd td.v-table-cell-content
 	background: #fff;
 }
 .v-window-outerheader {
-	cursor: move;
 	padding: 0.3em 1em;
 	height: 1em;
 }
+
+.v-window-outerheader,
+.v-window-draggingCurtain {
+ 	cursor: move;	
+}
+
 .v-window-header {
 	font-weight: bold;
 }
@@ -2338,16 +2425,22 @@ div.v-window-header {
 	zoom: 1;
 	height: 10px;
 	position: relative;
+	cursor: move;
 }
 .v-window-resizebox {
 	width: 10px;
 	height: 10px;
-	cursor: se-resize;
 	background: #ddd;
 	overflow: hidden;
 	position: absolute;
 	right: 0;
 }
+
+.v-window-resizebox,
+.v-window-resizingCurtain {
+	cursor: se-resize;
+}
+
 .v-window div.v-window-footer-noresize {
 	height: 0;
 }
@@ -2970,26 +3063,47 @@ td.v-datefield-calendarpanel-month {
 	text-align:right;
 	white-space: nowrap;
 }
-.v-formlayout-spacing .v-formlayout-row .v-formlayout-captioncell, 
-.v-formlayout-spacing .v-formlayout-row .v-formlayout-contentcell,
-.v-formlayout-spacing .v-formlayout-row .v-formlayout-errorcell {
+.v-formlayout-spacing > tbody > .v-formlayout-row > .v-formlayout-captioncell, 
+.v-formlayout-spacing > tbody > .v-formlayout-row > .v-formlayout-contentcell,
+.v-formlayout-spacing > tbody > .v-formlayout-row > .v-formlayout-errorcell {
 	padding-top: 8px;
 }
-.v-formlayout-margin-top .v-formlayout-firstrow .v-formlayout-captioncell, 
-.v-formlayout-margin-top .v-formlayout-firstrow .v-formlayout-contentcell,
-.v-formlayout-margin-top .v-formlayout-firstrow .v-formlayout-errorcell {
+.v-formlayout-margin-top > tbody > .v-formlayout-firstrow > .v-formlayout-captioncell, 
+.v-formlayout-margin-top > tbody > .v-formlayout-firstrow > .v-formlayout-contentcell,
+.v-formlayout-margin-top > tbody > .v-formlayout-firstrow > .v-formlayout-errorcell {
 	padding-top: 15px;
 }
-.v-formlayout-margin-bottom .v-formlayout-lastrow .v-formlayout-captioncell,
-.v-formlayout-margin-bottom .v-formlayout-lastrow .v-formlayout-contentcell,
-.v-formlayout-margin-bottom .v-formlayout-lastrow .v-formlayout-errorcell {
+.v-formlayout-margin-bottom > tbody > .v-formlayout-lastrow > .v-formlayout-captioncell,
+.v-formlayout-margin-bottom > tbody > .v-formlayout-lastrow > .v-formlayout-contentcell,
+.v-formlayout-margin-bottom > tbody > .v-formlayout-lastrow > .v-formlayout-errorcell {
 	padding-bottom: 15px;
 }
-.v-formlayout-margin-left .v-formlayout-captioncell {
+.v-ie6 .v-formlayout-spacing .v-formlayout-row .v-formlayout-captioncell, 
+.v-ie6 .v-formlayout-spacing .v-formlayout-row .v-formlayout-contentcell,
+.v-ie6 .v-formlayout-spacing .v-formlayout-row .v-formlayout-errorcell {
+	padding-top: expression(/v-formlayout-spacing/.test(this.parentNode.parentNode.parentNode.className) ? "8px" : "0px");
+}
+.v-ie6 .v-formlayout-margin-top .v-formlayout-row .v-formlayout-captioncell, 
+.v-ie6 .v-formlayout-margin-top .v-formlayout-row .v-formlayout-contentcell,
+.v-ie6 .v-formlayout-margin-top .v-formlayout-row .v-formlayout-errorcell {
+	padding-top: expression((/v-formlayout-firstrow/.test(this.parentNode.className) && /v-formlayout-margin-top/.test(this.parentNode.parentNode.parentNode.className)) ? "15px" : (/v-formlayout-spacing/.test(this.parentNode.parentNode.parentNode.className) ? "8px" : "0px"));
+}
+.v-ie6 .v-formlayout-margin-bottom .v-formlayout-row .v-formlayout-captioncell,
+.v-ie6 .v-formlayout-margin-bottom .v-formlayout-row .v-formlayout-contentcell,
+.v-ie6 .v-formlayout-margin-bottom .v-formlayout-row .v-formlayout-errorcell {
+	padding-bottom: expression((/v-formlayout-lastrow/.test(this.parentNode.className) && /v-formlayout-margin-bottom/.test(this.parentNode.parentNode.parentNode.className)) ? "15px" : "0px");
+}
+.v-formlayout-margin-left > tbody > .v-formlayout-row > .v-formlayout-captioncell {
 	padding-left: 18px;
 } 
-.v-formlayout-margin-right .v-formlayout-contentcell {
+.v-formlayout-margin-right > tbody > .v-formlayout-row > .v-formlayout-contentcell {
 	padding-right: 18px;
+}
+.v-ie6 .v-formlayout-margin-left .v-formlayout-row .v-formlayout-captioncell {
+	padding-left: expression(/v-formlayout-margin-left/.test(this.parentNode.parentNode.parentNode.className) ? "18px" : "0px");
+}
+.v-ie6 .v-formlayout-margin-right .v-formlayout-row .v-formlayout-contentcell {
+	padding-right: expression(/v-formlayout-margin-right/.test(this.parentNode.parentNode.parentNode.className) ? "18px" : "0px");
 }
 /* form */
 .v-form-errormessage {
