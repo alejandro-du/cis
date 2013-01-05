@@ -3,7 +3,7 @@ CIS (Customer Interaction System)
 
 A file sharing web application.
 
-Licence
+License
 =======
 
 Note that CIS is dual-licensed.
